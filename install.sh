@@ -7,7 +7,7 @@ echo $parent_dir
 #move files to /usr/bin
 sudo cp -Rf $parent_dir/ $new_dir
 
-sudo chmod 777 /usr/bin/MacMagic
+sudo chmod -R 755 /usr/bin/MacMagic
 
 #make the application executable
 sudo chmod +x "${new_dir}MacMagic/bin/macmagic"

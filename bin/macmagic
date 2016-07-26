@@ -41,6 +41,11 @@ module MacMagic
 					$options[:help] = '1'
 					exit
 				end
+				opts.on("-V","--Version","Displays version and date of release") do
+					puts "Version: 1.0"
+					puts "Release Date: 07/26/2016"
+					exit
+				end
 				opts.on("-i","--interface=INTERFACE","Interface") do |i|
 					$options[:interface] = i
 				end

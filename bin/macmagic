@@ -32,16 +32,21 @@ module MacMagic
 			OptionParser.new do |opts|
 				opts.banner = "Usage: newmac [options]"
 
+				opts.on("-h","--help","Prints this help") do
+					puts opts
+					exit
+				end
 				opts.on("-i","--interface=INTERFACE","Interface") do |i|
 					$options[:interface] = i
 				end
 				opts.on("-m","--mac=MAC","MAC Address") do |m|
 					$options[:mac] = m
 				end
-				opts.on("-h","--help","Prints this help") do
-					puts opts
-					exit
+				opts.on("-p","--mac-prefix=MACPREFIX","First 3 octets of MAC Address (OUI)") do |p|
+					$options[:prefix] = p
 				end
+				
+
 			end.parse!			
 		end
 

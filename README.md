@@ -1,14 +1,14 @@
 # macmagic
 
-After downloading extract the files and rename the root folder to MacMagic (remove the '-master')
-
 follow these steps.
 
-cd into the root MacMagic directory
+Change the root directory name: sudo mv MacMagic-master/ MacMagic
+
+cd into the root MacMagic directory: cd MacMagic
 
 run this cmd: sudo chmod +x install.sh
 
-the while still in the root MacMagic directory run: 
+then while still in the root MacMagic directory run: 
 
 sudo ./install.sh
 
@@ -21,3 +21,8 @@ Usage: newmac [options]
     -m, --mac=MAC                    MAC Address
     -h, --help                       Prints this help
 
+Enjoy the Application!!!!!
+
+
+
+test

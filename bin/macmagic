@@ -1,4 +1,13 @@
 #!/usr/bin/env ruby
+#title           :macmagic
+#description     :This application will spoof your mac address
+#author		 	 :p4nT4N30
+#date            :20160725
+#version         :1.0   
+#usage		     :bash (sudo) macmagic [options]
+#notes           :
+#####################################################################################
+
 require "optparse"
 
 module MacMagic

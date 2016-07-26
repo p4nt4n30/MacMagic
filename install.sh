@@ -1,4 +1,12 @@
 #!/bin/sh
+#title           :macmagic
+#description     :This script will install macmagic
+#author		 	 :p4nT4N30
+#date            :20160725
+#version         :1.0   
+#usage		     :bash sudo ./install.sh
+#notes           :
+#####################################################################################
 parent_dir="${PWD}"
 new_dir="/usr/bin/"
 

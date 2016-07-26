@@ -17,15 +17,19 @@ module MacMagic
 	class Application
 		def run(argv)
 			parse_options(argv)
-			cm=getcurrentmac($options[:interface])
-			puts "Current MAC: #{cm}"
-			interfaceDown($options[:interface])
-			puts
-			setMac
-			interfaceUp($options[:interface])
-			puts
-			cm=getcurrentmac($options[:interface])
-			puts "Current MAC: #{cm}"
+			#puts $options
+			if options_validation
+				cm=getcurrentmac($options[:interface])
+				puts "Current MAC: #{cm}"
+				interfaceDown($options[:interface])
+				puts
+				setMac
+				interfaceUp($options[:interface])
+				puts
+				cm=getcurrentmac($options[:interface])
+				puts "Current MAC: #{cm}"
+			end
+			
 		end
 
 		def parse_options(argv)
@@ -34,20 +38,40 @@ module MacMagic
 
 				opts.on("-h","--help","Prints this help") do
 					puts opts
+					$options[:help] = '1'
 					exit
 				end
 				opts.on("-i","--interface=INTERFACE","Interface") do |i|
 					$options[:interface] = i
 				end
-				opts.on("-m","--mac=MAC","MAC Address") do |m|
+				opts.on("-m","--mac=MAC","MAC Address. FORMAT 00:00:00:00:00:00") do |m|
 					$options[:mac] = m
 				end
-				opts.on("-p","--mac-prefix=MACPREFIX","First 3 octets of MAC Address (OUI)") do |p|
+				opts.on("-p","--mac-prefix=MACPREFIX","First 3 octets of MAC Address (OUI). The last 3 octets will be random. FORMAT 00:00:00") do |p|
 					$options[:prefix] = p
 				end
 				
 
 			end.parse!			
+		end
+
+		def options_validation()
+			if $options[:interface].nil? && $options[:help].nil?
+				puts "You need to at least supply an interface that you want to change the MAC Address of. Use -i [interface]"
+				puts
+				puts "Or run the help menu macmagic -h"
+				exit
+			else
+				return true
+			end
+			if !$options[:mac].nil?
+				mac = $options[:mac].split(':')
+				if mac.length != 6
+					puts "You have supply the incorrect number of octets for a valid MAC address. FORMAT 00:00:00:00:00:00"
+					exit
+				end
+
+			end
 		end
 
 		def getcurrentmac(input)
@@ -68,13 +92,17 @@ module MacMagic
 		end
 
 		def randomMac()
-			rMac = (1..6).map{"%0.2X"%rand(256)}.join(":")
+			rMac = 6.times.map { '%02x' % rand(0..255)}.join(':')
+			rMac[1] = '0'
+			#puts rMac
 			return rMac
 		end
 
 		def setMac()
-			if $options[:mac].nil?
+			if $options[:mac].nil? && $options[:prefix].nil?
 				newmac=randomMac
+            elsif !$options[:prefix].nil?
+				puts "prefix is not nill"
 			else
 				newmac=$options[:mac]
 			end

@@ -34,7 +34,7 @@ module MacMagic
 
 		def parse_options(argv)
 			OptionParser.new do |opts|
-				opts.banner = "Usage: newmac [options]"
+				opts.banner = "Usage: {sudo} macmagic [options]"
 
 				opts.on("-h","--help","Prints this help") do
 					puts opts
@@ -56,21 +56,33 @@ module MacMagic
 		end
 
 		def options_validation()
-			if $options[:interface].nil? && $options[:help].nil?
+			if $options[:interface].nil? 
 				puts "You need to at least supply an interface that you want to change the MAC Address of. Use -i [interface]"
 				puts
 				puts "Or run the help menu macmagic -h"
 				exit
 			else
-				return true
+				r = true
 			end
+
 			if !$options[:mac].nil?
 				mac = $options[:mac].split(':')
 				if mac.length != 6
 					puts "You have supply the incorrect number of octets for a valid MAC address. FORMAT 00:00:00:00:00:00"
 					exit
 				end
+			end
 
+			if !$options[:prefix].nil?
+				prefix = $options[:prefix].split(':')
+				if prefix.length != 3
+					puts "The MAC Prefix needs to be 3 octets, FORMAT 00:00:00"
+					exit
+				end
+			end
+
+			if r == true
+				return true
 			end
 		end
 
@@ -102,7 +114,9 @@ module MacMagic
 			if $options[:mac].nil? && $options[:prefix].nil?
 				newmac=randomMac
             elsif !$options[:prefix].nil?
-				puts "prefix is not nill"
+				#puts "prefix is not nill"
+				rMac = 3.times.map { '%02x' % rand(0..255)}.join(':')
+				newmac=$options[:prefix]+rMac
 			else
 				newmac=$options[:mac]
 			end

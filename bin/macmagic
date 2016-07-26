@@ -1,1 +1,76 @@
 
+#!/usr/bin/env ruby
+require "optparse"
+
+module MacMagic
+	$argv = ARGV
+	$options = {}
+	$curMac
+	class Application
+		def run(argv)
+			parse_options(argv)
+			cm=getcurrentmac($options[:interface])
+			puts "Current MAC: #{cm}"
+			interfaceDown($options[:interface])
+			puts
+			setMac
+			interfaceUp($options[:interface])
+			puts
+			cm=getcurrentmac($options[:interface])
+			puts "Current MAC: #{cm}"
+		end
+
+		def parse_options(argv)
+			OptionParser.new do |opts|
+				opts.banner = "Usage: newmac [options]"
+
+				opts.on("-i","--interface=INTERFACE","Interface") do |i|
+					$options[:interface] = i
+				end
+				opts.on("-m","--mac=MAC","MAC Address") do |m|
+					$options[:mac] = m
+				end
+				opts.on("-h","--help","Prints this help") do
+					puts opts
+					exit
+				end
+			end.parse!			
+		end
+
+		def getcurrentmac(input)
+			$curMac = `ifconfig #{input} | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}'`
+			return $curMac
+		end
+
+		def interfaceDown(input)
+			system "ifconfig #{input} down"
+			puts "Interface #{input} is down!"
+			sleep(3)
+		end
+
+		def interfaceUp(input)
+			system "ifconfig #{input} up"
+			puts "Interface #{input} is up!"
+			sleep(3)
+		end
+
+		def randomMac()
+			rMac = (1..6).map{"%0.2X"%rand(256)}.join(":")
+			return rMac
+		end
+
+		def setMac()
+			if $options[:mac].nil?
+				newmac=randomMac
+			else
+				newmac=$options[:mac]
+			end
+			system "ifconfig #{$options[:interface]} hw ether #{newmac.downcase}"
+		end
+	end
+end
+
+
+o=MacMagic::Application.new
+
+o.run($argv)	

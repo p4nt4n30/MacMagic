@@ -49,14 +49,22 @@ module MacMagic
 				opts.on("-i","--interface=INTERFACE","Interface") do |i|
 					$options[:interface] = i
 				end
+				opts.on("-s","--search-oui=Vendor","Search OUI List for vendor Example: ASUS*") do |s|
+					#so = s
+					#puts s
+					system "grep -E '(hex)' /usr/bin/MacMagic/bin/oui | grep -n '#{s}' | sed 's/.*://'"
+					exit
+				end
+				opts.on("-l","--list-oui","List oui's (Vendor ID)") do 
+					system 'grep -E "(hex)" /usr/bin/MacMagic/bin/oui | sed "s/.*://" | less'
+					exit
+				end
 				opts.on("-m","--mac=MAC","MAC Address. FORMAT 00:00:00:00:00:00") do |m|
 					$options[:mac] = m
 				end
 				opts.on("-p","--mac-prefix=MACPREFIX","First 3 octets of MAC Address (OUI). The last 3 octets will be random. FORMAT 00:00:00") do |p|
 					$options[:prefix] = p
 				end
-				
-
 			end.parse!			
 		end
 
@@ -109,7 +117,7 @@ module MacMagic
 		end
 
 		def randomMac()
-			rMac = 6.times.map { '%02x' % rand(0..255)}.join(':')
+			rMac = 6.times.map { '%02xc' % rand(0..255)}.join(':')
 			rMac[1] = '0'
 			#puts rMac
 			return rMac

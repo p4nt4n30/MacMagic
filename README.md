@@ -19,10 +19,14 @@ After the install is complete run: macmagic -h (this will display the help menu)
 
 HELP MENU:
 
-Usage: newmac [options]
-    -i, --interface=INTERFACE        Interface
-    -m, --mac=MAC                    MAC Address
+Usage: {sudo} macmagic [options]
     -h, --help                       Prints this help
+    -V, --Version                    Displays version and date of release
+    -i, --interface=INTERFACE        Interface
+    -s, --search-oui=Vendor          Search OUI List for vendor Example: ASUS*
+    -l, --list-oui                   List oui's (Vendor ID)
+    -m, --mac=MAC                    MAC Address. FORMAT 00:00:00:00:00:00
+    -p, --mac-prefix=MACPREFIX       First 3 octets of MAC Address (OUI). The last 3 octets will be random. FORMAT 00:00:00
 
 Enjoy the Application!!!!!
 

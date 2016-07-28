@@ -28,6 +28,3 @@ Usage: (sudo) macmagic [options]
 
 Enjoy the Application!!!!!
 
-
-
-test

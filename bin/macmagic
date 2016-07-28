@@ -34,7 +34,7 @@ module MacMagic
 
 		def parse_options(argv)
 			OptionParser.new do |opts|
-				opts.banner = "Usage: {sudo} macmagic [options]"
+				opts.banner = "Usage: (sudo) macmagic [options]"
 
 				opts.on("-h","--help","Prints this help") do
 					puts opts

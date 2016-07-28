@@ -15,17 +15,17 @@ new_dir="/usr/bin/"
 echo "This script will check to make sure all dependencies are installed (ruby) if it is not install it will install ruby for you"
 
 echo "This script as with most need to be ran with root privilages (sudo), so if you get an permission error, it is most likley cause by you not appending sudo to the beginning of the command!"
-echo ''
-echo ''
+echo ""
+echo ""
 
-echo "checking if Ruby is installed...."
+echo "checking to see if Ruby is installed...."
 
 if hash ruby 2>/dev/null; then
 	echo "ruby is installed"
 else
 	echo "ruby needs to be installed"
 	echo "Ruby will be install now!!!"
-	sudo apt-get install ruby
+	sudo apt-get -y install ruby
 fi
 
 #move files to /usr/bin
@@ -36,5 +36,11 @@ sudo chmod -R 755 /usr/bin/MacMagic
 #make the application executable
 sudo chmod +x "${new_dir}MacMagic/bin/macmagic"
 
+#create symbolic link in the /usr/bin directory
 sudo ln -s /usr/bin/MacMagic/bin/macmagic /usr/bin/macmagic
+
+echo ""
+
+echo "MacMagic has been installed. Enjoy by typeing sudo macmagic -h in your terminal!!!!"
+
 

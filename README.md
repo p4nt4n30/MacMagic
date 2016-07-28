@@ -27,3 +27,7 @@ Usage: (sudo) macmagic [options]
     -p, --mac-prefix=MACPREFIX       First 3 octets of MAC Address (OUI). The last 3 octets will be random. FORMAT 00:00:00
 
 Enjoy the Application!!!!!
+
+
+
+test

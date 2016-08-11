@@ -3,7 +3,7 @@
 #description     :This application will spoof your mac address
 #author		 	 :p4nT4N30
 #date            :20160725
-#version         :1.0   
+#version         :1.0
 #usage		     :bash (sudo) macmagic [options]
 #notes           :
 #####################################################################################
@@ -29,7 +29,7 @@ module MacMagic
 				cm=getcurrentmac($options[:interface])
 				puts "Current MAC: #{cm}"
 			end
-			
+
 		end
 
 		def parse_options(argv)
@@ -52,11 +52,11 @@ module MacMagic
 				opts.on("-s","--search-oui=Vendor","Search OUI List for vendor Example: ASUS*") do |s|
 					#so = s
 					#puts s
-					system "grep -E '(hex)' /usr/bin/MacMagic/bin/oui | grep -n '#{s}' | sed 's/.*://'"
+					system "grep -E '(hex)' /usr/bin/MacMagic/oui.txt | grep -n '#{s}' | sed 's/.*://'"
 					exit
 				end
-				opts.on("-l","--list-oui","List oui's (Vendor ID)") do 
-					system 'grep -E "(hex)" /usr/bin/MacMagic/bin/oui | sed "s/.*://" | less'
+				opts.on("-l","--list-oui","List oui's (Vendor ID)") do
+					system 'grep -E "(hex)" /usr/bin/MacMagic/oui.txt | sed "s/.*://" | less'
 					exit
 				end
 				opts.on("-m","--mac=MAC","MAC Address. FORMAT 00:00:00:00:00:00") do |m|
@@ -65,11 +65,11 @@ module MacMagic
 				opts.on("-p","--mac-prefix=MACPREFIX","First 3 octets of MAC Address (OUI). The last 3 octets will be random. FORMAT 00:00:00") do |p|
 					$options[:prefix] = p
 				end
-			end.parse!			
+			end.parse!
 		end
 
 		def options_validation()
-			if $options[:interface].nil? 
+			if $options[:interface].nil?
 				puts "You need to at least supply an interface that you want to change the MAC Address of. Use -i [interface]"
 				puts
 				puts "Or run the help menu macmagic -h"
@@ -141,4 +141,4 @@ end
 
 o=MacMagic::Application.new
 
-o.run($argv)	
+o.run($argv)

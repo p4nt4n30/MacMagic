@@ -126,7 +126,7 @@ module MacMagic
 		def setMac()
 			if $options[:mac].nil? && $options[:prefix].nil?
 				newmac=randomMac
-            elsif !$options[:prefix].nil?
+      elsif !$options[:prefix].nil?
 				#puts "prefix is not nill"
 				rMac = 3.times.map { '%02x' % rand(0..255)}.join(':')
 				newmac=$options[:prefix]+rMac
